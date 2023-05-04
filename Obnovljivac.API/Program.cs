@@ -1,8 +1,31 @@
+using Obnovljivac.API.Services.NasaPower;
+using Obnovljivac.API.Services.Wind;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllers();
+builder.Services.AddHttpClient();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            // TODO: zamijenit s appsettingsom
+            policy.WithOrigins("https://localhost:44429");
+            //.AllowAnyHeader()
+            //.AllowAnyMethod())
+        });
+
+});
+
+
+builder.Services.AddScoped<IWindService, WindService>();
+builder.Services.AddScoped<INasaPowerService, NasaPowerService>();
 
 var app = builder.Build();
 
@@ -11,12 +34,20 @@ if (!app.Environment.IsDevelopment())
 {
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("v1/swagger.json", "My API V1");
+    });
 }
 
 app.UseHttpsRedirection();
+app.MapControllers();
+
 app.UseStaticFiles();
 app.UseRouting();
-
+app.UseCors();
 
 app.MapControllerRoute(
     name: "default",
