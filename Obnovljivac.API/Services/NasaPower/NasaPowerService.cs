@@ -1,4 +1,4 @@
-﻿using System.Net.Http;
+﻿using Obnovljivac.API.Models.NasaPower;
 
 namespace Obnovljivac.API.Services.NasaPower
 {
@@ -12,16 +12,15 @@ namespace Obnovljivac.API.Services.NasaPower
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<HttpResponseMessage> GetWind()
+        public async Task<PowerJSONPoint> GetWind()
         {
             var httpClient = _httpClientFactory.CreateClient("NasaPowerApi");
             var httpResponseMessage = await httpClient.GetAsync(_url);
-            //var stringRes = await httpResponseMessage.Content.ReadAsStringAsync();
-            //var jsonModel = await httpResponseMessage.Content.ReadFromJsonAsync<Object>();
 
             if (httpResponseMessage.IsSuccessStatusCode)
             {
-                return httpResponseMessage;
+                var jsonModel = await httpResponseMessage.Content.ReadFromJsonAsync<PowerJSONPoint>();
+                return jsonModel;
             }
 
             return null;

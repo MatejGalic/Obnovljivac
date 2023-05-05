@@ -145,13 +145,13 @@ ${
     string LowerCaseTypeName (Type t){
        var name = t.Name[0].ToString().ToLower() + t.Name.Substring(1);
        name = (t.Unwrap().IsEnum ? EnumsFolderTS : "") + name;
-       DebugInfo = DebugInfo + Environment.NewLine + "LowerCaseTypeName:" + t.IsEnum + " name="+name + "   "+t.Name + "  " + t.Unwrap().IsEnum;
+       // DebugInfo = DebugInfo + Environment.NewLine + "LowerCaseTypeName:" + t.IsEnum + " name="+name + "   "+t.Name + "  " + t.Unwrap().IsEnum;
        return CalculateName(name);
     }
 
    string LowerCaseClassName (Class t){
        var retVal = t.Name[0].ToString().ToLower() + t.Name.Substring(1);
-       DebugInfo = DebugInfo + Environment.NewLine + "LowerCaseClassName:" + t.Name;
+       // DebugInfo = DebugInfo + Environment.NewLine + "LowerCaseClassName:" + t.Name;
        return retVal;
     }
     
@@ -167,7 +167,7 @@ ${
     
     string GetEnumValue(EnumValue enumItem){
       var desc = enumItem.Attributes.Where(a => a.Name == "EnumAsStringValue").FirstOrDefault();
-      DebugInfo = DebugInfo + Environment.NewLine + "EnumAsStringValue:" + desc.Value;
+      // DebugInfo = DebugInfo + Environment.NewLine + "EnumAsStringValue:" + desc.Value;
       return desc != null ? $"'{desc.Value}'" : $"{enumItem.Value}";
     }
 

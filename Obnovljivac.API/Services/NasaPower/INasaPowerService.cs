@@ -1,7 +1,9 @@
-﻿namespace Obnovljivac.API.Services.NasaPower
+﻿using Obnovljivac.API.Models.NasaPower;
+
+namespace Obnovljivac.API.Services.NasaPower
 {
     public interface INasaPowerService
     {
-        Task<HttpResponseMessage> GetWind();
+        Task<PowerJSONPoint> GetWind();
     }
 }
