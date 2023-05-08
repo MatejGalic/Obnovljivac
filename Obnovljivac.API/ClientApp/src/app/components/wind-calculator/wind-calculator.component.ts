@@ -1,6 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { latLng, tileLayer } from 'leaflet';
+import {
+  LeafletMouseEvent,
+  Map,
+  MapOptions,
+  Marker,
+  latLng,
+  marker,
+  tileLayer,
+} from 'leaflet';
 import { Subject, takeUntil } from 'rxjs';
 import {
   IFormWindCalculatorBindingModel,
@@ -15,10 +23,14 @@ import { WindService } from 'src/app/services/wind.service';
   styleUrls: ['./wind-calculator.component.scss'],
 })
 export class WindCalculatorComponent implements OnInit, OnDestroy {
+  private readonly latDefault = 45.815399;
+  private readonly lngDefault = 15.966568;
+  private map: Map;
   private destroy$: Subject<void> = new Subject<void>();
   public form: FormGroup<IFormWindCalculatorBindingModel>;
 
-  public options = {
+  public pickMarker: Marker = marker([this.latDefault, this.lngDefault]);
+  public options: MapOptions = {
     layers: [
       tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18,
@@ -27,7 +39,7 @@ export class WindCalculatorComponent implements OnInit, OnDestroy {
       }),
     ],
     zoom: 7,
-    center: latLng(45.815399, 15.966568),
+    center: latLng(this.latDefault, this.lngDefault),
   };
 
   constructor(private windService: WindService) {}
@@ -44,8 +56,8 @@ export class WindCalculatorComponent implements OnInit, OnDestroy {
 
   private initForm() {
     this.form = new FormGroup<IFormWindCalculatorBindingModel>({
-      latitude: new FormControl(45.815399, Validators.required),
-      longitude: new FormControl(15.966568, Validators.required),
+      latitude: new FormControl(this.latDefault, Validators.required),
+      longitude: new FormControl(this.lngDefault, Validators.required),
       windClassWidth: new FormControl(2, Validators.required),
       windPowerPairs: new FormArray([]),
     });
@@ -103,5 +115,17 @@ export class WindCalculatorComponent implements OnInit, OnDestroy {
     const model: WindCalculatorBindingModel = this.form.getRawValue();
 
     this.windService.calculateWindEnergy(model);
+  }
+
+  public updatePosition(e: LeafletMouseEvent): void {
+    this.form.controls.latitude.setValue(+e.latlng.lat.toFixed(6));
+    this.form.controls.longitude.setValue(+e.latlng.lng.toFixed(6));
+
+    this.pickMarker = marker([e.latlng.lat, e.latlng.lng]);
+  }
+
+  public onMapReady(map: Map) {
+    this.map = map;
+    // Do stuff with map
   }
 }

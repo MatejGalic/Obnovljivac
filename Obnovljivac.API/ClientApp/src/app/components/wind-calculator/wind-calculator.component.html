@@ -2,7 +2,10 @@
   <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
     <div
       leaflet
+      (leafletClick)="updatePosition($event)"
+      (leafletMapReady)="onMapReady($event)"
       [leafletOptions]="options"
+      [leafletLayer]="pickMarker"
       class="w-full md:w-1/2 h-96 bg-gray-200 rounded border"
     ></div>
     <div class="w-full md:w-1/2 flex flex-col gap-2">
@@ -79,6 +82,7 @@
           class="button-delete w-1/2"
           type="button"
           (click)="removeLastPair()"
+          [disabled]="form.controls.windPowerPairs.controls.length <= 1"
         >
           Delete
         </button>
