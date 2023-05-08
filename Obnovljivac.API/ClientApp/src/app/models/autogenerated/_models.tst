@@ -186,7 +186,7 @@ ${
     }  
 }$Classes(f=> f.Namespace.StartsWith("Obnovljivac.API.Models") && !f.Attributes.Select(a=> a.Name.ToLower()).Contains("typewriterignore"))[$CalculatedModelTypes[import {$ClassName} from './$LowerCaseTypeName';
 ]$GetBaseClassIfExists[import {I$Name, $Name} from './$LowerCaseClassName';
-]$AddIfBindingModel[import { ControlsOf } from 'src/app/helpers/types/controls-of';]
+]$AddIfBindingModel[import { ControlsOf } from 'src/app/core/types/controls-of';]
 // ----------------------------------------------
 //  Interface and model
 // ----------------------------------------------

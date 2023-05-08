@@ -10,6 +10,7 @@ import { CounterComponent } from './components/counter/counter.component';
 import { FetchDataComponent } from './components/fetch-data/fetch-data.component';
 import { HomeComponent } from './home/home.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
+import { SharedModule } from './core/modules/shared.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },

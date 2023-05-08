@@ -1,4 +1,4 @@
-﻿import { ControlsOf } from 'src/app/helpers/types/controls-of';
+﻿import { ControlsOf } from 'src/app/core/types/controls-of';
 // ----------------------------------------------
 //  Interface and model
 // ----------------------------------------------
