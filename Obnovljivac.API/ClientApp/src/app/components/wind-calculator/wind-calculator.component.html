@@ -1,0 +1,16 @@
+<form [formGroup]="form" class="flex flex-col">
+  <input formControlName="latitude" type="number" />
+  <input formControlName="longitude" type="number" />
+  <input formControlName="windClassWidth" type="number" />
+
+  <ng-container
+    *ngFor="let pair of form.controls.windPowerPairs.controls; let i = index"
+  >
+    {{ i }}
+    <input [formControl]="pair.controls.power" />
+    <input [formControl]="pair.controls.windSpeed" />
+  </ng-container>
+
+  <button type="button" (click)="addNewPair()">Add pair</button>
+  <button type="button" (click)="submit()">Submit</button>
+</form>

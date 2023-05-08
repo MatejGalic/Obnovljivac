@@ -53,6 +53,20 @@ ${
       return r;
     }
 
+    Class AddIfBindingModel(Class c) {
+      if (c.Namespace.StartsWith("Obnovljivac.API.Models.BindingModel"))
+      {
+        return c;
+      }
+      
+      return null;
+
+      //$AddIfBindingModel[
+      //export interface IForm$Name$TypeParameters $GetBaseClassIfExists[extends I]$GetBaseClassWithTypeIfExists {$Properties[
+      //$LowerCasePropertyName: FormControl<IForm$Type>;]}
+      //]
+    }
+
     string GetBaseClassWithTypeIfExists(Class c) {
       var hasBase = c.BaseClass!=null;
       var baseIsAbstractWithoutProps = hasBase && c.BaseClass.IsAbstract && c.BaseClass.Properties.Count()==0;
@@ -169,18 +183,19 @@ ${
       var desc = enumItem.Attributes.Where(a => a.Name == "EnumAsStringValue").FirstOrDefault();
       // DebugInfo = DebugInfo + Environment.NewLine + "EnumAsStringValue:" + desc.Value;
       return desc != null ? $"'{desc.Value}'" : $"{enumItem.Value}";
-    }
-
+    }  
 }$Classes(f=> f.Namespace.StartsWith("Obnovljivac.API.Models") && !f.Attributes.Select(a=> a.Name.ToLower()).Contains("typewriterignore"))[$CalculatedModelTypes[import {$ClassName} from './$LowerCaseTypeName';
 ]$GetBaseClassIfExists[import {I$Name, $Name} from './$LowerCaseClassName';
-]
+]$AddIfBindingModel[import { ControlsOf } from 'src/app/helpers/types/controls-of';]
 // ----------------------------------------------
 //  Interface and model
 // ----------------------------------------------
 export interface I$Name$TypeParameters $GetBaseClassIfExists[extends I]$GetBaseClassWithTypeIfExists {$Properties[
     $LowerCasePropertyName: $Type;]
 }
-
+$AddIfBindingModel[
+export interface IForm$Name$TypeParameters extends ControlsOf<$Name$TypeParameters>{}
+]
 export class $Name$TypeParameters $GetBaseClassIfExists[extends ]$GetBaseClassWithTypeIfExists implements I$Name$TypeParameters {$Properties[
     public $LowerCasePropertyName: $Type;]
 
