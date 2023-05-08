@@ -1,4 +1,4 @@
-<form [formGroup]="form" class="flex flex-col">
+<!-- <form [formGroup]="form" class="flex flex-col">
   <input formControlName="latitude" type="number" />
   <input formControlName="longitude" type="number" />
   <input formControlName="windClassWidth" type="number" />
@@ -13,4 +13,90 @@
 
   <button type="button" (click)="addNewPair()">Add pair</button>
   <button type="button" (click)="submit()">Submit</button>
+</form> -->
+
+<form [formGroup]="form" class="max-w-4xl mx-auto px-4">
+  <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+    <div class="w-full md:w-1/2 h-96 bg-gray-200"></div>
+    <div class="w-full md:w-1/2 flex flex-col gap-2">
+      <div class="flex flex-col gap-2">
+        <div>
+          <label class="block text-gray-700 font-bold mb-2" for="input1">
+            Kut zemljopisne širine
+          </label>
+          <input formControlName="latitude" class="w-full" type="number" />
+        </div>
+        <div>
+          <label class="block text-gray-700 font-bold mb-2" for="input2">
+            Kut zemljopisne dužine
+          </label>
+          <input formControlName="longitude" class="w-full" type="number" />
+        </div>
+        <div>
+          <label class="block text-gray-700 font-bold mb-2" for="input3">
+            Širina klase vjetra [m/s]
+          </label>
+          <input
+            formControlName="windClassWidth"
+            class="w-full"
+            type="number"
+            [min]="0"
+          />
+        </div>
+      </div>
+
+      <div>
+        <div class="flex space-x-4">
+          <label class="w-1/2 block text-gray-700 font-bold mb-2">
+            Vjetar [m/s]
+          </label>
+          <label class="w-1/2 block text-gray-700 font-bold mb-2">
+            Snaga [kW]
+          </label>
+        </div>
+        <div class="flex flex-col space-y-4">
+          <!-- dynamic inputs will be added here -->
+          <ng-container
+            *ngFor="
+              let pair of form.controls.windPowerPairs.controls;
+              let i = index
+            "
+          >
+            <div class="flex space-x-4">
+              <div class="w-1/2">
+                <input
+                  class="w-full"
+                  type="number"
+                  [min]="0"
+                  [formControl]="pair.controls.windSpeed"
+                />
+              </div>
+              <div class="w-1/2">
+                <input
+                  class="w-full"
+                  type="number"
+                  [min]="0"
+                  [formControl]="pair.controls.power"
+                />
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="flex gap-4">
+        <button class="button-add w-1/2" type="button" (click)="addNewPair()">
+          Add Input
+        </button>
+        <button
+          class="button-delete w-1/2"
+          type="button"
+          (click)="removeLastPair()"
+        >
+          Delete
+        </button>
+      </div>
+      <button class="button-save" type="button" (click)="submit()">Save</button>
+    </div>
+  </div>
 </form>
