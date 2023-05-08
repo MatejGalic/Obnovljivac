@@ -1,32 +1,28 @@
 <header>
-  <nav
-    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
-  >
-    <div class="container">
-      <a class="text-3xl navbar-brand" [routerLink]="['/']">Obnovljivac</a>
-
-      <ul class="navbar-nav flex-grow">
+  <div class="flex items-center justify-between">
+    <a class="text-2xl font-bold text-gray-900" [routerLink]="['/']">
+      Obnovljivac
+    </a>
+    <nav>
+      <ul class="flex space-x-4">
         <li
-          class="nav-item"
           [routerLinkActive]="['link-active']"
           [routerLinkActiveOptions]="{ exact: true }"
         >
           <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
         </li>
-        <li class="nav-item" [routerLinkActive]="['link-active']">
-          <a class="nav-link text-dark" [routerLink]="['/counter']">Counter</a>
+        <li [routerLinkActive]="['link-active']">
+          <a [routerLink]="['/counter']">Counter</a>
         </li>
-        <li class="nav-item" [routerLinkActive]="['link-active']">
-          <a class="nav-link text-dark" [routerLink]="['/fetch-data']"
-            >Fetch data</a
-          >
+        <li [routerLinkActive]="['link-active']">
+          <a [routerLink]="['/fetch-data']">Fetch data</a>
         </li>
-        <li class="nav-item" [routerLinkActive]="['link-active']">
+        <li [routerLinkActive]="['link-active']">
           <a class="nav-link text-dark" [routerLink]="['/calculator']"
             >Calculator</a
           >
         </li>
       </ul>
-    </div>
-  </nav>
+    </nav>
+  </div>
 </header>
