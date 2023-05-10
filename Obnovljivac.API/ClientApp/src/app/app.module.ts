@@ -5,20 +5,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { WindCalculatorComponent } from './components/wind-calculator/wind-calculator.component';
-import { CounterComponent } from './components/counter/counter.component';
-import { FetchDataComponent } from './components/fetch-data/fetch-data.component';
-import { HomeComponent } from './home/home.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
+import { WindCalculatorComponent } from './components/wind-calculator/wind-calculator.component';
 import { SharedModule } from './core/modules/shared.module';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    CounterComponent,
-    FetchDataComponent,
     WindCalculatorComponent,
   ],
   imports: [
@@ -29,8 +25,6 @@ import { SharedModule } from './core/modules/shared.module';
     SharedModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
       { path: 'calculator', component: WindCalculatorComponent },
     ]),
   ],
