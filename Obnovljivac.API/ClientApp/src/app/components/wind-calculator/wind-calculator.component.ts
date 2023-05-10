@@ -1,10 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import {
+  Icon,
   LeafletMouseEvent,
   Map,
   MapOptions,
   Marker,
+  icon,
   latLng,
   marker,
   tileLayer,
@@ -29,7 +31,14 @@ export class WindCalculatorComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
   public form: FormGroup<IFormWindCalculatorBindingModel>;
 
-  public pickMarker: Marker = marker([this.latDefault, this.lngDefault]);
+  public pickMarker: Marker = marker([this.latDefault, this.lngDefault], {
+    icon: icon({
+      ...Icon.Default.prototype.options,
+      iconUrl: 'assets/images/vendors/leaflet/marker-icon.png',
+      iconRetinaUrl: 'assets/images/vendors/leaflet/marker-icon-2x.png',
+      shadowUrl: 'assets/images/vendors/leaflet/marker-shadow.png',
+    }),
+  });
   public options: MapOptions = {
     layers: [
       tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

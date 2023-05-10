@@ -115,14 +115,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": [
-              "src/assets",
-              {
-                "glob": "**/*",
-                "input": "./node_modules/leaflet/dist/images/", // you may need to change this path, according to your files structure
-                "output": "./assets/"
-              }
-            ],
+            "assets": ["src/assets"],
             "styles": [
               "src/styles.scss",
               "./node_modules/leaflet/dist/leaflet.css"
