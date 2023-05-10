@@ -1,9 +1,10 @@
-﻿using Obnovljivac.API.Models.NasaPower;
+﻿using Obnovljivac.API.Models.BindingModels;
+using Obnovljivac.API.Models.NasaPower;
 
 namespace Obnovljivac.API.Services.NasaPower
 {
     public interface INasaPowerService
     {
-        Task<PowerJSONPoint> GetWind();
+        Task<PowerJSONPoint> GetWindSpeeds(WindCalculatorBindingModel model);
     }
 }

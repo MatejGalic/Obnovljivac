@@ -11,7 +11,7 @@ import {
   marker,
   tileLayer,
 } from 'leaflet';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, take, takeUntil } from 'rxjs';
 import {
   IFormWindCalculatorBindingModel,
   WindCalculatorBindingModel,
@@ -25,20 +25,17 @@ import { WindService } from 'src/app/services/wind.service';
   styleUrls: ['./wind-calculator.component.scss'],
 })
 export class WindCalculatorComponent implements OnInit, OnDestroy {
-  private readonly latDefault = 45.815399;
-  private readonly lngDefault = 15.966568;
+  private readonly LAT_DEFAULT = 45.8153;
+  private readonly LNG_DEFAULT = 15.9665;
   private map: Map;
   private destroy$: Subject<void> = new Subject<void>();
   public form: FormGroup<IFormWindCalculatorBindingModel>;
 
-  public pickMarker: Marker = marker([this.latDefault, this.lngDefault], {
-    icon: icon({
-      ...Icon.Default.prototype.options,
-      iconUrl: 'assets/images/vendors/leaflet/marker-icon.png',
-      iconRetinaUrl: 'assets/images/vendors/leaflet/marker-icon-2x.png',
-      shadowUrl: 'assets/images/vendors/leaflet/marker-shadow.png',
-    }),
-  });
+  public pickMarker: Marker = this.markerBuilder(
+    this.LAT_DEFAULT,
+    this.LNG_DEFAULT
+  );
+
   public options: MapOptions = {
     layers: [
       tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -48,7 +45,7 @@ export class WindCalculatorComponent implements OnInit, OnDestroy {
       }),
     ],
     zoom: 7,
-    center: latLng(this.latDefault, this.lngDefault),
+    center: latLng(this.LAT_DEFAULT, this.LNG_DEFAULT),
   };
 
   constructor(private windService: WindService) {}
@@ -65,8 +62,8 @@ export class WindCalculatorComponent implements OnInit, OnDestroy {
 
   private initForm() {
     this.form = new FormGroup<IFormWindCalculatorBindingModel>({
-      latitude: new FormControl(this.latDefault, Validators.required),
-      longitude: new FormControl(this.lngDefault, Validators.required),
+      latitude: new FormControl(this.LAT_DEFAULT, Validators.required),
+      longitude: new FormControl(this.LNG_DEFAULT, Validators.required),
       windClassWidth: new FormControl(2, Validators.required),
       windPowerPairs: new FormArray([]),
     });
@@ -123,14 +120,30 @@ export class WindCalculatorComponent implements OnInit, OnDestroy {
     }
     const model: WindCalculatorBindingModel = this.form.getRawValue();
 
-    this.windService.calculateWindEnergy(model);
+    this.windService
+      .calculateWindEnergy(model)
+      .pipe(take(1))
+      .subscribe((res) => {
+        console.log(res);
+      });
   }
 
   public updatePosition(e: LeafletMouseEvent): void {
-    this.form.controls.latitude.setValue(+e.latlng.lat.toFixed(6));
-    this.form.controls.longitude.setValue(+e.latlng.lng.toFixed(6));
+    this.form.controls.latitude.setValue(+e.latlng.lat.toFixed(4));
+    this.form.controls.longitude.setValue(+e.latlng.lng.toFixed(4));
 
-    this.pickMarker = marker([e.latlng.lat, e.latlng.lng]);
+    this.pickMarker = this.markerBuilder(e.latlng.lat, e.latlng.lng);
+  }
+
+  private markerBuilder(lat: number, lng: number): Marker {
+    return marker([lat, lng], {
+      icon: icon({
+        ...Icon.Default.prototype.options,
+        iconUrl: 'assets/images/vendors/leaflet/marker-icon.png',
+        iconRetinaUrl: 'assets/images/vendors/leaflet/marker-icon-2x.png',
+        shadowUrl: 'assets/images/vendors/leaflet/marker-shadow.png',
+      }),
+    });
   }
 
   public onMapReady(map: Map) {

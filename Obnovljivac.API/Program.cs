@@ -16,9 +16,9 @@ builder.Services.AddCors(options =>
         policy =>
         {
             // TODO: zamijenit s appsettingsom
-            policy.WithOrigins("https://localhost:44429");
-            //.AllowAnyHeader()
-            //.AllowAnyMethod())
+            policy.WithOrigins("https://localhost:44429")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
         });
 
 });

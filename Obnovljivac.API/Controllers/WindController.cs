@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Obnovljivac.API.Models.BindingModels;
 using Obnovljivac.API.Services.NasaPower;
+using Obnovljivac.API.Services.Wind;
 
 namespace Obnovljivac.API.Controllers
 {
@@ -8,18 +10,19 @@ namespace Obnovljivac.API.Controllers
     public class WindController : ControllerBase
     {
         private readonly ILogger<WindController> _logger;
-        private readonly INasaPowerService _powerService;
+        private readonly IWindService _windService;
 
-        public WindController(ILogger<WindController> logger, INasaPowerService nasaPowerService)
+        public WindController(ILogger<WindController> logger, IWindService windService)
         {
             _logger = logger;
-            _powerService = nasaPowerService;
+            _windService = windService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetWind()
+        [HttpPost]
+        //public async Task<IActionResult> CalculateWindPower()
+        public async Task<IActionResult> CalculateWindPower([FromBody] WindCalculatorBindingModel model)
         {
-            var x = await _powerService.GetWind();
+            var x = await _windService.CalculateEnergy(model);
             return Ok(x);
         }
     }
