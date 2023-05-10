@@ -87,7 +87,19 @@
           Delete
         </button>
       </div>
-      <button class="button-save" type="button" (click)="submit()">Save</button>
+      <button
+        [disabled]="submitDisabled"
+        class="button-save"
+        type="button"
+        (click)="submit()"
+      >
+        <img
+          *ngIf="submitDisabled"
+          class="h-4"
+          src="assets/images/spinners/spinner-btn.svg"
+        />
+        Save
+      </button>
     </div>
   </div>
 </form>

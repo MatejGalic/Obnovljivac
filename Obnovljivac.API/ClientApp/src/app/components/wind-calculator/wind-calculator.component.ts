@@ -30,6 +30,7 @@ export class WindCalculatorComponent implements OnInit, OnDestroy {
   private map: Map;
   private destroy$: Subject<void> = new Subject<void>();
   public form: FormGroup<IFormWindCalculatorBindingModel>;
+  public submitDisabled: boolean = false;
 
   public pickMarker: Marker = this.markerBuilder(
     this.LAT_DEFAULT,
@@ -120,10 +121,12 @@ export class WindCalculatorComponent implements OnInit, OnDestroy {
     }
     const model: WindCalculatorBindingModel = this.form.getRawValue();
 
+    this.submitDisabled = true;
     this.windService
       .calculateWindEnergy(model)
       .pipe(take(1))
       .subscribe((res) => {
+        this.submitDisabled = false;
         console.log(res);
       });
   }
