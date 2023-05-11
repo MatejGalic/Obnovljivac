@@ -33,9 +33,11 @@ export class ChartComponent implements OnInit {
         labels: this.labels,
         datasets: [
           {
-            label: 'Sales',
+            label: 'Energija [kWh]',
             data: this._data,
-            backgroundColor: 'blue',
+            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1,
           },
         ],
       },
