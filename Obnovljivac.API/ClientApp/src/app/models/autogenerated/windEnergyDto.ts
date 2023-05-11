@@ -2,13 +2,13 @@
 // ----------------------------------------------
 //  Interface and model
 // ----------------------------------------------
-export interface IWindDailyEnergyDto  {
+export interface IWindEnergyDto  {
     dailyEnergy: number[][];
     monthlyEnergy: number[];
     yearlyEnergy: number;
 }
 
-export class WindDailyEnergyDto  implements IWindDailyEnergyDto {
+export class WindEnergyDto  implements IWindEnergyDto {
     public dailyEnergy: number[][];
     public monthlyEnergy: number[];
     public yearlyEnergy: number;

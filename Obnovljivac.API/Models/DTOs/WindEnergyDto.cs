@@ -1,6 +1,6 @@
 ﻿namespace Obnovljivac.API.Models.DTOs
 {
-    public class WindDailyEnergyDto
+    public class WindEnergyDto
     {
         //public Dictionary<int, Dictionary<int, double>> DailyEnergy { get; set; }
         public List<List<double>> DailyEnergy { get; set; }

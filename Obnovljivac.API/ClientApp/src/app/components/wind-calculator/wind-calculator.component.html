@@ -6,7 +6,7 @@
       (leafletMapReady)="onMapReady($event)"
       [leafletOptions]="options"
       [leafletLayer]="pickMarker"
-      class="w-full md:w-1/2 h-96 bg-gray-200 rounded border"
+      class="w-full md:w-1/2 h-96 bg-gray-200 rounded border shadow"
     ></div>
     <div class="w-full md:w-1/2 flex flex-col gap-2">
       <div class="flex flex-col gap-2">
@@ -103,3 +103,52 @@
     </div>
   </div>
 </form>
+
+<!-- Results -->
+<div #tableContainer class="container mt-20 mx-auto" *ngIf="energyByDay">
+  <p class="text-gray-700 text-sm">*Sve vrijednosti su izražene u [kWh]</p>
+  <div
+    class="flex justify-center overflow-x-auto border border-gray-400 rounded-md shadow-md"
+  >
+    <table class="w-full block lg:table">
+      <thead>
+        <tr>
+          <th>Dan</th>
+          <th>Siječanj</th>
+          <th>Veljača</th>
+          <th>Ožujak</th>
+          <th>Travanj</th>
+          <th>Svibanj</th>
+          <th>Lipanj</th>
+          <th>Srpanj</th>
+          <th>Kolovoz</th>
+          <th>Rujan</th>
+          <th>Listopad</th>
+          <th>Studeni</th>
+          <th>Prosinac</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let days of energyByDay; let i = index">
+          <td>{{ i + 1 }}.</td>
+          <td *ngFor="let energy of days">
+            {{ energy | number : "1.2-2" }}
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr class="font-bold">
+          <td>SUMA:</td>
+          <td *ngFor="let energy of energyByMonth">
+            {{ energy | number : "1.0-0" }}
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div class="w-full text-center mt-5 mb-40 bg">
+    <h1 class="text-6xl font-extrabold">
+      Godišnje: {{ yearlyEnergy | number : "1.2-2" }} kWh
+    </h1>
+  </div>
+</div>

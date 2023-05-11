@@ -1,19 +1,19 @@
 <header>
   <div class="flex items-center justify-between">
     <a class="text-2xl font-bold text-gray-900" [routerLink]="['/']">
-      Obnovljivac
+      Obnovljivač
     </a>
     <nav>
-      <ul class="space-x-4 sm:flex hidden">
+      <ul class="space-x-4 flex">
         <li
           [routerLinkActive]="['link-active']"
           [routerLinkActiveOptions]="{ exact: true }"
         >
-          <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
+          <a class="nav-link text-dark" [routerLink]="['/']">Početna</a>
         </li>
         <li [routerLinkActive]="['link-active']">
           <a class="nav-link text-dark" [routerLink]="['/calculator']"
-            >Calculator</a
+            >Kalkulator</a
           >
         </li>
       </ul>

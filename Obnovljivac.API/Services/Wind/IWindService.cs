@@ -5,6 +5,6 @@ namespace Obnovljivac.API.Services.Wind
 {
     public interface IWindService
     {
-        Task<WindDailyEnergyDto> CalculateEnergy(WindCalculatorBindingModel model);
+        Task<WindEnergyDto> CalculateEnergy(WindCalculatorBindingModel model);
     }
 }

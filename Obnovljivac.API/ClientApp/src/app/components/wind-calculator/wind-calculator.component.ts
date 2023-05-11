@@ -1,4 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import {
   Icon,
@@ -11,7 +18,7 @@ import {
   marker,
   tileLayer,
 } from 'leaflet';
-import { Subject, take, takeUntil } from 'rxjs';
+import { Subject, take, takeUntil, tap } from 'rxjs';
 import {
   IFormWindCalculatorBindingModel,
   WindCalculatorBindingModel,
@@ -25,12 +32,16 @@ import { WindService } from 'src/app/services/wind.service';
   styleUrls: ['./wind-calculator.component.scss'],
 })
 export class WindCalculatorComponent implements OnInit, OnDestroy {
+  @ViewChild('tableContainer') tableContainerRef: ElementRef<HTMLElement>;
   private readonly LAT_DEFAULT = 45.8153;
   private readonly LNG_DEFAULT = 15.9665;
   private map: Map;
   private destroy$: Subject<void> = new Subject<void>();
   public form: FormGroup<IFormWindCalculatorBindingModel>;
   public submitDisabled: boolean = false;
+  public energyByDay: number[][];
+  public energyByMonth: number[];
+  public yearlyEnergy: number;
 
   public pickMarker: Marker = this.markerBuilder(
     this.LAT_DEFAULT,
@@ -49,7 +60,10 @@ export class WindCalculatorComponent implements OnInit, OnDestroy {
     center: latLng(this.LAT_DEFAULT, this.LNG_DEFAULT),
   };
 
-  constructor(private windService: WindService) {}
+  constructor(
+    private windService: WindService,
+    private cdRef: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -124,10 +138,32 @@ export class WindCalculatorComponent implements OnInit, OnDestroy {
     this.submitDisabled = true;
     this.windService
       .calculateWindEnergy(model)
-      .pipe(take(1))
+      .pipe(
+        take(1),
+        tap((e) => {
+          this.submitDisabled = false;
+          this.energyByDay = [];
+        })
+      )
       .subscribe((res) => {
-        this.submitDisabled = false;
-        console.log(res);
+        this.energyByMonth = res.monthlyEnergy;
+        this.yearlyEnergy = res.yearlyEnergy;
+
+        for (let i = 0; i < 31; i++) {
+          this.energyByDay[i] = [];
+          res.dailyEnergy.forEach((month) => {
+            let energy = month[i];
+            this.energyByDay[i].push(energy ?? null);
+          });
+        }
+        this.cdRef.detectChanges();
+
+        var headerOffset = 64;
+        var elementPosition =
+          this.tableContainerRef.nativeElement.getBoundingClientRect().top;
+        var offsetPosition =
+          elementPosition + window.pageYOffset - headerOffset;
+        window.scrollTo({ behavior: 'smooth', top: offsetPosition });
       });
   }
 

@@ -15,7 +15,7 @@ namespace Obnovljivac.API.Services.Wind
             _powerService = powerService;
         }
 
-        public async Task<WindDailyEnergyDto> CalculateEnergy(WindCalculatorBindingModel model)
+        public async Task<WindEnergyDto> CalculateEnergy(WindCalculatorBindingModel model)
         {
             if (model == null) { return null; }
 
@@ -69,7 +69,7 @@ namespace Obnovljivac.API.Services.Wind
                 monthlyEnergy.Add(item.Sum());
             }
 
-            WindDailyEnergyDto dto = new WindDailyEnergyDto();
+            WindEnergyDto dto = new WindEnergyDto();
             dto.DailyEnergy = dailyEnergy;
             dto.MonthlyEnergy = monthlyEnergy;
             dto.YearlyEnergy = monthlyEnergy.Sum();
