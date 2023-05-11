@@ -67,7 +67,8 @@ export class WindCalculatorComponent implements OnInit, OnDestroy {
       tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18,
         minZoom: 1,
-        attribution: '...',
+        attribution:
+          'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
       }),
     ],
     zoom: 7,
