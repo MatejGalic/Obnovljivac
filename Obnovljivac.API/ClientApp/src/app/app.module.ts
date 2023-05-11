@@ -6,9 +6,10 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
-import { WindCalculatorComponent } from './components/wind-calculator/wind-calculator.component';
+
 import { SharedModule } from './core/modules/shared.module';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './pages/home/home.component';
+import { WindCalculatorComponent } from './pages/wind-calculator/wind-calculator.component';
 
 @NgModule({
   declarations: [
