@@ -103,9 +103,10 @@
     </div>
   </div>
 </form>
-<canvas id="MyChart">{{ chart }}</canvas>
+
 <!-- Results -->
 <div #tableContainer class="container mt-20 mx-auto" *ngIf="energyByDay">
+  <app-chart [labels]="labels" [data]="energyByMonth"></app-chart>
   <p class="text-gray-700 text-sm">*Sve vrijednosti su izražene u [kWh]</p>
   <div
     class="flex justify-center overflow-x-auto border border-gray-400 rounded-md shadow-md"
