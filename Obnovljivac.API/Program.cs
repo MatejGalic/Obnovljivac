@@ -16,7 +16,7 @@ builder.Services.AddCors(options =>
         policy =>
         {
             // TODO: zamijenit s appsettingsom
-            policy.WithOrigins("https://localhost:44429")
+            policy.WithOrigins("https://localhost:44429", "http://mgseminar-001-site1.etempurl.com/")
             .AllowAnyHeader()
             .AllowAnyMethod();
         });
@@ -49,6 +49,6 @@ app.MapControllers();
 //    name: "default",
 //    pattern: "{controller}/{action=Index}/{id?}");
 
-//app.MapFallbackToFile("index.html");
+app.MapFallbackToFile("index.html");
 
 app.Run();
