@@ -23,13 +23,10 @@ import { HomeComponent } from './home/home.component';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    RouterModule.forRoot(
-      [
-        { path: '', component: HomeComponent, pathMatch: 'full' },
-        { path: 'calculator', component: WindCalculatorComponent },
-      ],
-      { scrollOffset: [-90, -150] }
-    ),
+    RouterModule.forRoot([
+      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'calculator', component: WindCalculatorComponent },
+    ]),
   ],
   providers: [],
   bootstrap: [AppComponent],

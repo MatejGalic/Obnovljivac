@@ -76,7 +76,7 @@
 
       <div class="flex gap-4">
         <button class="button-add w-1/2" type="button" (click)="addNewPair()">
-          Add Input
+          Dodaj
         </button>
         <button
           class="button-delete w-1/2"
@@ -84,7 +84,7 @@
           (click)="removeLastPair()"
           [disabled]="form.controls.windPowerPairs.controls.length <= 1"
         >
-          Delete
+          Izbriši
         </button>
       </div>
       <button
@@ -98,12 +98,12 @@
           class="h-4"
           src="assets/images/spinners/spinner-btn.svg"
         />
-        Save
+        Izračunaj
       </button>
     </div>
   </div>
 </form>
-
+<canvas id="MyChart">{{ chart }}</canvas>
 <!-- Results -->
 <div #tableContainer class="container mt-20 mx-auto" *ngIf="energyByDay">
   <p class="text-gray-700 text-sm">*Sve vrijednosti su izražene u [kWh]</p>
@@ -114,18 +114,7 @@
       <thead>
         <tr>
           <th>Dan</th>
-          <th>Siječanj</th>
-          <th>Veljača</th>
-          <th>Ožujak</th>
-          <th>Travanj</th>
-          <th>Svibanj</th>
-          <th>Lipanj</th>
-          <th>Srpanj</th>
-          <th>Kolovoz</th>
-          <th>Rujan</th>
-          <th>Listopad</th>
-          <th>Studeni</th>
-          <th>Prosinac</th>
+          <th *ngFor="let label of labels">{{ label }}</th>
         </tr>
       </thead>
       <tbody>

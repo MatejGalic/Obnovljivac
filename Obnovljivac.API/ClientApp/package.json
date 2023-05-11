@@ -25,6 +25,7 @@
     "@angular/router": "^15.2.6",
     "@asymmetrik/ngx-leaflet": "^15.0.1",
     "@nguniversal/express-engine": "^15.2.0",
+    "chart.js": "^4.3.0",
     "jquery": "^3.6.0",
     "leaflet": "^1.9.3",
     "oidc-client": "^1.11.5",
